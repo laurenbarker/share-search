@@ -4,7 +4,7 @@ module.exports = function(environment) {
     var ENV = {
         modulePrefix: 'ember-share',
         environment: environment,
-        baseURL: '/share/',
+        baseURL: '/',
         creativeworkName: 'Not Categorized',
         locationType: 'auto',
         EmberENV: {
@@ -33,12 +33,6 @@ module.exports = function(environment) {
             'img-src': "'self'",
             'style-src': "'self'",
             'media-src': "'self'"
-        },
-
-        'ember-form-for': {
-            fieldHasErrorClasses: 'has-error',
-            errorClasses: ['text-danger'],
-            hintClasses: ['help-block'],
         },
 
         modelIDs: {
