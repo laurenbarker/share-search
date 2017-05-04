@@ -1,99 +1,169 @@
-<div class="index-search-section">
-    <div class="container index-container">
-        <div class="index-jumbo row">
-            <div class="col-xs-12">
-                <div>
-                    <img class="index-background" src='assets/images/main_logo.png'>
+<div class="container-fluid discover-search-section">
+    <div class="row discover-flex-search-container">
+        <div class="col-xs-12 discover-search-block">
+            <div class="row share-search">
+                <div class="col-xs-11 discover-search-bar">
+                    {{input class="form-control" value=q key-up='typing' placeholder=placeholder}}
                 </div>
-
-                    <div class="row index-search-row">
-                        <div class="col-xs-offset-1 col-xs-10" id="index-row">
-                            {{input class="form-control" enter='search' value=searchString placeholder=placeholder }}
-                        </div>
-                        <div class="col-xs-1 index-search-icon">
-                            <a href="" {{action 'search'}}>
-                                <i style="font-size: 150%; margin-top: 5px" class="fa fa-search"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row" id="index-row">
-                        {{#link-to "discover" class="index-advanced"}}Advanced Search{{/link-to}}
-                    </div>
-
-                    <div class="row" id="index-tile-row">
-                        <div class=" index-tile col-lg-4">
-                            {{#link-to 'discover' (query-params type="publication") class="index-filter" invokeAction=(action 'track' 'publication')}}
-                                {{ homepage-button-box label='PUBLICATIONS' icon='fa fa-book' }}
-                            {{/link-to}}
-                        </div>
-                        <div class="index-tile col-lg-4">
-                            {{#link-to 'discover' (query-params type="preprint") class="index-filter" invokeAction=(action 'track' 'preprint')}}
-                                {{ homepage-button-box label='PREPRINTS' icon='fa fa-file-text' }}
-                            {{/link-to}}
-                        </div>
-                        <div class="index-tile col-lg-4">
-                            {{#link-to 'sources' class="index-filter" invokeAction=(action 'track' 'sources')}}
-                                {{ homepage-button-box label='SOURCES' icon='fa fa-university'}}
-                            {{/link-to}}
-                        </div>
-                    </div>
+                <div class="col-xs-1 discover-search-icons">
+                    <a href="" {{action 'search'}}>
+                        {{fa-icon 'search' class='search-button' title='Search'}}
+                    </a>
+                    <a href={{atomFeedUrl}}>
+                        {{fa-icon 'feed' class='feed-button' title='Atom feed for this search'}}
+                    </a>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="container index-container">
-    <div class="index-info row">
-        <div class="col-xs-10 col-xs-offset-1">
-            The
-            <a href="https://github.com/CenterForOpenScience/SHARE">SHARE infrastructure</a>
-             was developed by the
-            <a href="http://www.arl.org/">Association of Research Libraries</a> in partnership with the
-            <a href="http://cos.io/">Center for Open Science</a>. SHARE is funded by the
-            <a href="http://www.imls.gov/">Institute of Museum and Library Services</a> and the
-            <a href="http://www.sloan.org/">Alfred P. Sloan Foundation</a>.
-            The SHARE initiative was founded in 2013 by <a href="http://www.arl.org/">ARL</a>, the
-            <a href="http://www.aau.edu/">Association of American Universities (AAU)</a>, and the
-            <a href="http://www.aplu.org/">Association of Public and Land-grant Universities (APLU)</a>.
-            <br>
-            <br>
-            For more information about the organization, go to
-            <a href="http://share-research.org">share-research.org</a>. For more information about the project, including
-            <a href="https://osf.io/yg3xj/">presentations</a> and
-            <a href="https://osf.io/68ymx/">working group details </a>check out
-            <a href="https://osf.io/t3j94">SHARE on the OSF</a>.
-        </div>
-    </div>
-</div>
-<div class="index-source-section">
-    <div class="container index-container">
-        <div class="index-provider row">
             <div class="row">
-                <h3 class="index-provider-title col-xs-12">Become a SHARE Source</h3>
-            </div>
-            <div class="row" id="index-provider-tile">
-                <div class="col-sm-4 offset-sm-1">
-                    {{
-                        footer-boxes
-                        type='registration'
-                        label='Source Registration'
-                        icon='fa fa-map'
-                        description="Include your organization's publications, data, repository holdings, or other research."
-                        click=(action 'transitionRegistration')
-                    }}
-                </div>
-                <div class="col-sm-4">
-                    {{
-                        footer-boxes
-                        type='api'
-                        label='API Usage'
-                        icon='fa fa-database'
-                        description='Search all SHARE data, post to SHARE, and get metrics on the SHARE sources.'
-                        click=(action 'transitionAPI')
-                    }}
+                <div class="col-xs-11 discover-search-bar">
+                    <div class="row">
+                      <div class="col-xs-8 text-muted">
+                          <small>Found {{locale-string numberOfResults}} works in {{took}} seconds</small>
+                      </div>
+                      {{#if queryBody}}
+                        <div class="col-xs-4 text-right discover-font">
+                            <i>
+                                <a{{action 'toggleCollapsedQueryBody'}} href="#">
+                                    View query body
+                                    {{#if collapsedQueryBody}}
+                                        {{fa-icon 'caret-up'}}
+                                    {{else}}
+                                        {{fa-icon 'caret-down'}}
+                                    {{/if}}
+                                </a>
+                            </i>
+                        </div>
+                    {{/if}}
+                    </div>
                 </div>
             </div>
+            {{#bs-collapse collapsed=collapsedQueryBody}}
+                <div id="queryBody" class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class=" col-xs-11 text-left discover-font">
+                                <i>Search API: <a class="elasticsearch-link" href={{searchUrl}}>{{searchUrl}}</a></i>
+                            </div>
+                            <div class="col-xs-11">
+                                {{json-pretty
+                                    obj=displayQueryBody
+                                    shouldHighlight=true
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/bs-collapse}}
+            <div class="row visible-xs">
+                <div class="col-xs-12 discover-filter-list">
+                    {{#each facetStatesArray as |filter|}}
+                        {{#if (and filter.key (not-eq key 'date'))}}
+                            {{#each filter.value as |value|}}
+                                <a class='discover-filter-block' {{action 'removeFilter' filter.key value}}>
+                                    {{value}} {{fa-icon 'times'}}
+                                </a>
+                            {{/each}}
+                        {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+            <div class="row visible-xs">
+                <div class="col-xs-12 text-left discover-font">
+                    <i>
+                        <a{{action 'toggleCollapsedFilters'}} href="#">
+                            View filter options
+                            {{#if collapsedFilters}}
+                                {{fa-icon 'caret-up'}}
+                            {{else}}
+                                {{fa-icon 'caret-down'}}
+                            {{/if}}
+                        </a>
+                    </i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        {{#if media.isExtraSmall}}
+            <div class='col-xs-12 visible-xs discover-sidebar-xs'>
+                {{#bs-collapse collapsed=collapsedFilters}}
+                    {{sortby-dropdown
+                        sortOptions=sortOptions
+                        sortDisplay=sortDisplay
+                        selectSortOption=(action 'selectSortOption')
+                    }}
+                    <div class="row">
+                        <div class="col-xs-12 text-left">
+                            <div class="reset-filters-section">
+                                <button {{action 'clearFilters'}} class='reset-filters-btn'>
+                                    Reset all filters
+                                    <i class="fa fa-times text-danger"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {{faceted-search
+                        onChange='filtersChanged'
+                        updateParams='updateParams'
+                        filters=facetFilters
+                        facetStates=facetStates
+                        facets=facets
+                        aggregations=aggregations
+                    }}
+                {{/bs-collapse}}
+            </div>
+        {{/if}}
+        <div class='col-xs-12 discover-flex-container'>
+            <div class='discover-main-content restrict-width'>
+                {{#if loading}}
+                    {{loading-bars}}
+                {{else if queryError}}
+                    {{query-syntax}}
+                {{else if noResultsMessage}}
+                    <div class="text-center no-results">{{noResultsMessage}}</div>
+                {{else}}
+                    {{#each results as |obj|}}
+                        {{search-result addFilter='addFilter' obj=obj}}
+                    {{/each}}
+                    <div class="pull-left text-left">
+                        {{page-controls page=page clampedPages=clampedPages loadPage=(action 'loadPage')}}
+                        {{#if hiddenPages}}
+                            <div style="color:gray">
+                                {{locale-string hiddenPages}} additional pages not shown
+                            </div>
+                        {{/if}}
+                    </div>
+                {{/if}}
+            </div>
+            {{#if (not media.isExtraSmall)}}
+                <div class='discover-sidebar hidden-xs'>
+                    {{sortby-dropdown
+                        sortOptions=sortOptions
+                        sortDisplay=sortDisplay
+                        selectSortOption=(action 'selectSortOption')
+                    }}
+                    <div class="row">
+                        <div class="col-xs-12 text-left">
+                            <div class="reset-filters-section">
+                                <button {{action 'clearFilters'}} class='reset-filters-btn'>
+                                    Reset all filters
+                                    <i class="fa fa-times text-danger"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {{faceted-search
+                        onChange='filtersChanged'
+                        updateParams='updateParams'
+                        filters=facetFilters
+                        facetStates=facetStates
+                        facets=facets
+                        aggregations=aggregations
+                    }}
+                </div>
+            {{/if}}
         </div>
     </div>
 </div>
