@@ -48,47 +48,14 @@ module.exports = function(environment) {
     };
     //this needs to go in an actual env at some point
     ENV.csrfCookie = 'csrftoken';
-    ENV.apiBaseUrl = 'http://localhost:8000';
-    ENV.apiUrl = 'http://localhost:8000/api/v2';
+    ENV.apiBaseUrl = 'https://share.osf.io';
+    ENV.apiUrl = 'https://share.osf.io/api/v2';
     ENV.curationEnabled = true;
-
-    // if (environment === 'development') {
-    //     ENV.APP.LOG_RESOLVER = true;
-    //     ENV.APP.LOG_ACTIVE_GENERATION = true;
-    //     ENV.APP.LOG_TRANSITIONS = true;
-    //     ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    //     ENV.APP.LOG_VIEW_LOOKUPS = true;
-    // }
-
-    if (environment === 'staging') {
-        ENV.apiBaseUrl = 'https://staging-share.osf.io';
-        ENV.apiUrl = 'https://staging-share.osf.io/api/v2';
-        ENV.curationEnabled = true;
-
-        // Testem prefers this...
-        ENV.baseURL = '/';
-
-        // keep test console output quieter
-        ENV.APP.LOG_ACTIVE_GENERATION = false;
-        ENV.APP.LOG_VIEW_LOOKUPS = false;
-
-        ENV.modelIDs = {
-            person: 100,
-            creativework: 70,
-        };
-
-        // ENV.APP.rootElement = '#ember-staging';
-    }
 
     if (environment === 'production') {
         ENV.apiBaseUrl = 'https://share.osf.io';
         ENV.apiUrl = 'https://share.osf.io/api/v2';
         ENV.curationEnabled = false;
-        ENV.metricsAdapters = [{
-            name: 'GoogleAnalytics',
-            environments: ['production'],
-            config: { id: 'UA-83881781-1' }
-        }];
 
         ENV.modelIDs = {
             person: 100,
