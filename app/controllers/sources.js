@@ -70,7 +70,7 @@ export default Ember.Controller.extend({
 
             this.get('metrics').trackEvent({ category, action, label });
 
-            this.transitionToRoute('discover', { queryParams: { sources: encodeParams(selected) } });
+            this.transitionToRoute('index', { queryParams: { sources: encodeParams(selected) } });
         },
 
         elasticSearch(term) {

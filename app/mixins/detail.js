@@ -36,10 +36,10 @@ export default Ember.Mixin.create({
         },
         goBack() {
             const previousRouteName = this.get('routeHistory.previous');
-            if (previousRouteName === 'discover' || previousRouteName === 'detail') {
+            if (previousRouteName === 'index' || previousRouteName === 'detail') {
                 history.back();
             } else {
-                this.transitionToRoute('discover');
+                this.transitionToRoute('index');
             }
         }
     }
