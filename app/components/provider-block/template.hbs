@@ -1,6 +1,6 @@
 <div class="col-sm-6 col-xs-12">
     <div class="provider-filter">
-        {{#link-to "discover" (query-params sources=encodedParam) class="provider-filter"}}
+        {{#link-to "index" (query-params sources=encodedParam) class="provider-filter"}}
             <img class="provider-icon" src={{source.attributes.icon}}>
             {{source.attributes.longTitle}}
         {{/link-to}}
