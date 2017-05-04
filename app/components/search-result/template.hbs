@@ -105,7 +105,7 @@
 <div class="row date-line-padding default-cursor">
     <div class="col-xs-12">
         <span class="text-muted last-updated">
-            Last ingested <span class="text-data">{{moment-format obj.date_modified 'MMM DD, YYYY'}}</span> from
+            Last ingested <span class="text-data">{{dateModified}}</span> from
             {{#if (gt obj.sources.length 1)}}
                 one of
             {{/if}}

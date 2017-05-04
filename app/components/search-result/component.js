@@ -58,6 +58,9 @@ export default Ember.Component.extend({
     dateUpdated: Ember.computed('obj.date_updated', function() {
         return moment(this.get('obj.date_updated')).utc().format('MMM DD, YYYY');
     }),
+    dateModified: Ember.computed('obj.date_modified', function() {
+        return moment(this.get('obj.date_modified')).utc().format('MMM DD, YYYY, h:mm:ss a');
+    }),
     didRender() {
         MathJax.Hub.Queue(['Typeset', MathJax.Hub, this.$()[0]]);  // jshint ignore: line
     },
