@@ -53,6 +53,8 @@ module.exports = function(environment) {
     ENV.curationEnabled = true;
 
     if (environment === 'production') {
+    ENV.locationType = 'hash';
+    ENV.baseUrl = '/ember-share/';
         ENV.apiBaseUrl = 'https://share.osf.io';
         ENV.apiUrl = 'https://share.osf.io/api/v2';
         ENV.curationEnabled = false;
