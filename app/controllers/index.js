@@ -321,12 +321,6 @@ export default ApplicationController.extend({
         return facetStates;
     }),
 
-    atomFeedUrl: Ember.computed('queryBody', function() {
-        let query = this.get('queryBody.query');
-        let encodedQuery = encodeURIComponent(JSON.stringify(query));
-        return `${ENV.apiUrl}/atom/?elasticQuery=${encodedQuery}`;
-    }),
-
     scrollToResults() {
         Ember.$('html, body').scrollTop(Ember.$('.discover-search-section').position().top);
     },
