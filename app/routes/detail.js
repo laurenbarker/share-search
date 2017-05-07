@@ -5,7 +5,7 @@ import RouteHistoryMixin from 'ember-route-history/mixins/routes/route-history';
 export default Ember.Route.extend(RouteHistoryMixin, {
     model(params) {
         let adapter = this.store.adapterFor('graph');
-        return adapter.ajax('/api/v2/graph/', 'POST', {
+        return adapter.ajax('https://share.osf.io/api/v2/graph/', 'POST', {
             data: {
                 variables: '',
                 query: `query {
